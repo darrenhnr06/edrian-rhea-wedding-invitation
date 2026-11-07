@@ -111,6 +111,15 @@
 @media(max-width:760px){.portrait-story{padding:88px 22px}.portrait-story-inner{grid-template-columns:1fr;gap:48px}.portrait-story-frame{width:min(100%,470px);margin:auto}.portrait-story-copy{text-align:center}.portrait-story-copy .overline{justify-content:center}.portrait-story-copy>p:not(.overline){margin-left:auto;margin-right:auto}.portrait-story-signoff{justify-content:center}.portrait-story::before{font-size:240px;right:-70px}.hero-visual::before{inset:2% 8% 1%}}
 .release-button:disabled{opacity:.62;cursor:progress}
 
+/* Make the opening action unmistakable without breaking the envelope illusion. */
+.wax-seal::after{content:'';position:absolute;inset:-10px;border:1px solid #f5d0a9b5;border-radius:50%;animation:sealCue 1.8s ease-out infinite;pointer-events:none}
+.envelope-instruction{position:absolute;z-index:9;left:50%;bottom:15px;transform:translateX(-50%);display:flex;align-items:center;gap:8px;padding:8px 13px;border:1px solid #f4d2aa8c;border-radius:999px;background:#2b2134dc;color:#fff0dc;font:700 8px var(--sans);letter-spacing:.18em;white-space:nowrap;box-shadow:0 8px 22px #1b1227a8;animation:openCue 1.8s ease-in-out infinite;pointer-events:none}
+.envelope-instruction span{color:#f0c58f;font-size:11px}
+@keyframes sealCue{0%{opacity:.95;transform:scale(.84)}75%,100%{opacity:0;transform:scale(1.38)}}
+@keyframes openCue{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-4px)}}
+@media(max-width:600px){.envelope-instruction{bottom:11px;padding:7px 11px;font-size:7px}.wax-seal::after{inset:-8px}}
+@media(max-height:680px) and (max-width:600px){.envelope-instruction{bottom:7px;padding:5px 9px}}
+
 /* EXPERIENCE LAYER: chapter guidance, living light, and a cinematic finale. */
 .magic-layer{position:fixed;inset:0;z-index:2500;pointer-events:none;overflow:hidden}
 .magic-spark{position:absolute;color:#ffe2ae;text-shadow:0 0 8px #ffdb9d,0 0 22px #f7ad84;font-family:var(--serif);animation:magicDrift 1.25s var(--ease) forwards;will-change:transform,opacity}
@@ -160,7 +169,7 @@
 .ending-base{position:relative;z-index:2;color:#cbb2ad;border-color:#d2af9045}
 @media(max-width:1050px){.chapter-rail{display:none}.ending-layout{grid-template-columns:minmax(280px,430px) 1fr;gap:55px}.ending-photo-stack{min-height:580px}.ending-photo-caption{right:-1%;font-size:34px}}
 @media(max-width:760px){.ending{padding:90px 20px 24px;text-align:center}.ending-layout{grid-template-columns:1fr;gap:58px;margin-bottom:60px}.ending-photo-stack{width:min(100%,440px);min-height:570px;margin:auto}.ending-photo-main{right:12%;left:2%}.ending-photo-note{right:1%;width:43%;height:39%}.ending-photo-caption{right:2%;top:9%;font-size:31px}.ending-inner{text-align:center}.ending-inner .overline,.ending-actions{justify-content:center}.ending-script{margin-top:30px}.ending:before{left:50%;top:45%;width:530px;height:530px}.ending-orbit{left:50%;top:38%;font-size:440px}}
-@media(prefers-reduced-motion:reduce){.magic-spark{display:none}.site.entered .hero-visual::before{animation:none}.hero-visual::before,.portrait-story-frame img{transition:none}.letter-sheet:hover,.day-stage:hover{transform:none}}
+@media(prefers-reduced-motion:reduce){.magic-spark{display:none}.site.entered .hero-visual::before{animation:none}.hero-visual::before,.portrait-story-frame img{transition:none}.letter-sheet:hover,.day-stage:hover{transform:none}.wax-seal::after,.envelope-instruction{animation:none}}
 
 </style>
 </head>
@@ -180,8 +189,8 @@
         <span class="envelope-flap"></span><span class="envelope-front"></span><span class="envelope-side left"></span><span class="envelope-side right"></span>
         <span class="wax-seal"><span>E <small>&</small> R</span></span>
         <span class="envelope-glint"></span>
+        <span class="envelope-instruction"><span>✦</span> TAP TO OPEN <span>✦</span></span>
       </button>
-      <p class="tap-note"><span class="tap-icon">✧</span> tap the seal to open our letter <span class="tap-icon">✧</span></p>
       <p class="intro-couple">Edrian <span>&</span> Rhea</p>
       <p class="intro-date">SATURDAY · 21 NOVEMBER 2026</p>
       <button class="enter-link" type="button" id="openText">Unfold the magic <span>↗</span></button>
@@ -308,7 +317,7 @@
           <button type="button" class="string" data-note="4" aria-label="Pluck B string"><span class="string-name">B</span><span class="string-line"></span></button>
           <button type="button" class="string" data-note="5" aria-label="Pluck high E string"><span class="string-name">E</span><span class="string-line"></span></button>
         </div><span class="guitar-hint">TOUCH OR GLIDE ACROSS THE STRINGS</span>
-      </div><div class="guitar-side"><span class="guitar-side-kicker">AN ORIGINAL LITTLE INTERLUDE</span><h3>For two hearts<br/><em>in perfect harmony.</em></h3><p>No musical talent required. Just a little love.</p><button type="button" id="strumBtn" class="strum-button">Play their forever chord <span>♫</span></button><button type="button" class="melody-button" id="melodyBtn">Play a little love melody <span>↗</span></button><div class="guitar-moment" id="guitarMoment" aria-live="polite">Every string is a little wish.</div></div></div>
+      </div><div class="guitar-side"><span class="guitar-side-kicker">AN ORIGINAL LITTLE INTERLUDE</span><h3>For two hearts<br/><em>in perfect harmony.</em></h3><p>Touch or glide across the strings. Every note is yours.</p><div class="guitar-moment" id="guitarMoment" aria-live="polite">Every string is a little wish.</div></div></div>
     </section>
 
     <section class="wishes" id="wishes" aria-labelledby="wishesTitle">
@@ -361,7 +370,6 @@
 
   // WebAudio powers only the interactive guitar strings below.
   const GUITAR_NOTES=[82.41,110,146.83,196,246.94,329.63];
-  const CHORD=[82.41,123.47,164.81,207.65,246.94,329.63];
   const audio={ctx:null};
   function makeContext(){
     try {if(!audio.ctx){const A=window.AudioContext||window.webkitAudioContext;if(!A)return null;audio.ctx=new A();}if(audio.ctx.state==='suspended')audio.ctx.resume().catch(()=>{});return audio.ctx;} catch(e){return null;}
@@ -448,19 +456,6 @@
   window.addEventListener('pointerup',()=>{drawing=false;lastString=-1;});
   window.addEventListener('pointercancel',()=>{drawing=false;lastString=-1;});
   stringButtons.forEach(b=>b.addEventListener('click',e=>{if(e.detail===0)playGuitarIndex(Number(b.dataset.note));}));
-  function playChord(){
-    $('#guitarMoment').textContent='Six strings. Two hearts. One forever. ♡';
-    CHORD.forEach((freq,i)=>{setTimeout(()=>{pluck(freq,.14);const key=stringButtons[i];key.classList.remove('plucked');void key.offsetWidth;key.classList.add('plucked');setTimeout(()=>key.classList.remove('plucked'),700);},i*105);});
-  }
-  $('#strumBtn').addEventListener('click',playChord);
-  let melodyLock=false;
-  $('#melodyBtn').addEventListener('click',()=>{
-    if(melodyLock)return;melodyLock=true;
-    const melody=[329.63,369.99,415.30,493.88,415.30,369.99,329.63,246.94,329.63,369.99,329.63,246.94,220,246.94,329.63];
-    $('#guitarMoment').textContent='A little melody, made just for them. ✦';
-    melody.forEach((note,i)=>setTimeout(()=>pluck(note,.09),i*275));
-    setTimeout(()=>melodyLock=false,melody.length*275+250);
-  });
 
   // Blessings & RSVP: the same two-tab flow from the first beloved invitation.
   function chooseWishTab(mode){
