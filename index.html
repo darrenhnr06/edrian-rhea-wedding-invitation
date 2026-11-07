@@ -176,6 +176,15 @@
 .ending-base{position:relative;z-index:2;color:#cbb2ad;border-color:#d2af9045}
 @media(max-width:1050px){.chapter-rail{display:none}.ending-layout{grid-template-columns:minmax(280px,430px) 1fr;gap:55px}.ending-photo-stack{min-height:580px}.ending-photo-caption{right:-1%;font-size:34px}}
 @media(max-width:760px){.ending{padding:90px 20px 24px;text-align:center}.ending-layout{grid-template-columns:1fr;gap:58px;margin-bottom:60px}.ending-photo-stack{width:min(100%,440px);min-height:570px;margin:auto}.ending-photo-main{right:12%;left:2%}.ending-photo-note{right:1%;width:43%;height:39%}.ending-photo-caption{right:2%;top:9%;font-size:31px}.ending-inner{text-align:center}.ending-inner .overline,.ending-actions{justify-content:center}.ending-script{margin-top:30px}.ending:before{left:50%;top:45%;width:530px;height:530px}.ending-orbit{left:50%;top:38%;font-size:440px}}
+
+/* Mobile readability refinements from real-device review. */
+@media(max-width:600px){
+ .family-role{display:block;margin-bottom:14px}
+ .scene-chapel{bottom:21%}
+ .scene-caption{bottom:10px;left:14px;right:14px;padding:10px 13px 11px;border:1px solid #f2d6b559;border-radius:9px;background:#211a2ee8;color:#fff3e5;font-size:17px;line-height:1.35;text-shadow:0 2px 8px #0f0d17;box-shadow:0 8px 24px #16101f8c;backdrop-filter:blur(5px)}
+ .ending-photo-caption{top:13px;right:50%;transform:translateX(50%) rotate(-2deg);padding:9px 16px 10px;border:1px solid #efcfaa73;border-radius:999px;background:#241d32e8;color:#ffe4c2;font-size:28px;line-height:1;white-space:nowrap;box-shadow:0 10px 28px #0c0b15a6;text-shadow:0 2px 10px #100d19}
+}
+@media(max-width:375px){.ending-photo-caption{font-size:24px;padding-left:13px;padding-right:13px}}
 @media(prefers-reduced-motion:reduce){.magic-spark{display:none}.site.entered .hero-visual::before{animation:none}.hero-visual::before,.portrait-story-frame img{transition:none}.letter-sheet:hover,.day-stage:hover{transform:none}.wax-seal::after,.envelope-instruction{animation:none}}
 
 </style>
